@@ -71,7 +71,7 @@ function App() {
       <button onClick={() => setTable(mapper(flights.sort(sorter('duration'))))}>duration</button>
       <button onClick={() => setTable(mapper(flights.sort(sorter('id'))))}>id</button>
       <button onClick={() => setTable(mapper(flights.sort(sorter('date'))))}>date</button>
-      <button onClick={() => console.log(flightKeys)}>lalal</button>
+      <button onClick={() => console.log(flightKeys)}>lalala</button>
     </div>
   );
 }
