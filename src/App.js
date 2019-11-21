@@ -45,12 +45,12 @@ function App() {
     <div className="App">
       <h1>Memeondo</h1>
       <br />
+      <h5>Sort by:</h5>
       <div className="btn-group" role="group" aria-label="Basic example">
-        <button type="button" className="btn btn-secondary">Left</button>
-        <button type="button" className="btn btn-secondary">Middle</button>
-        <button type="button" className="btn btn-secondary">Middle</button>
-        <button type="button" className="btn btn-secondary">Right</button>
+      {flightKeys.slice(0,flightKeys.length-1).map((fk)=>{return <button type="button" className="btn btn-outline-secondary btn-lg" onClick={() => setTable(mapper(flights.sort(sorter(fk))))}>{fk.charAt(0).toUpperCase() + fk.slice(1)}</button> })}
       </div>
+      <br/>
+      <br/>
       <table className="table table-striped">
         <thead>
           <tr>
@@ -67,11 +67,12 @@ function App() {
           {table}
         </tbody>
       </table>
-      <button onClick={() => setTable(mapper(flights.sort(sorter('price'))))}>pris</button>
+      {/* <button onClick={() => setTable(mapper(flights.sort(sorter('price'))))}>pris</button>
       <button onClick={() => setTable(mapper(flights.sort(sorter('duration'))))}>duration</button>
       <button onClick={() => setTable(mapper(flights.sort(sorter('id'))))}>id</button>
       <button onClick={() => setTable(mapper(flights.sort(sorter('date'))))}>date</button>
-      <button onClick={() => console.log(flightKeys)}>lalala</button>
+      <button onClick={() => console.log(flightKeys.map((fk)=>{return <p>{fk + 1}</p> }))}>lalala</button> */}
+      
     </div>
   );
 }
