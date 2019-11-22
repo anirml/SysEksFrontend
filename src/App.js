@@ -119,8 +119,19 @@ function App() {
 
   }
 
+  const SearchFlightsDate = (date) =>{
+    fetch('http://localhost:8080/jjugroup/api/flight/date/' + date)
+    .then(res => res.json())
+    .then((data) => {
+      setFlights(data)
+      setTable(mapper(data)
+      )
+    })
 
-  const SearchForm = (props) => {
+  }
+
+
+  const SearchForm = () => {
     const [origin,setOrigin] = useState("");
     const [destination,setDestination] = useState("");
   
@@ -141,6 +152,22 @@ function App() {
     );
   }
 
+  const DateSearchForm = () => {
+    const [date,setDate] = useState("");
+  
+    return(
+      <div className="input-group mb-3">
+      <div className="input-group-prepend">
+        <span className="input-group-text" id="">Find rejse dato </span>
+      </div>
+      <input type="text" className="form-control" placeholder="Ankomstdestination" id="input3" onChange={(event)=>setDate(event.target.value)} value={date} />
+      <div className="input-group-append">
+        <button className="btn btn-outline-secondary" type="button" id="btn1" onClick={() => SearchFlightsDate(date)} >Søg</button>
+      </div>
+    </div>
+    );
+  }
+
 
 
   return (
@@ -148,12 +175,14 @@ function App() {
       <h1>Memeondo</h1>
 
       <SearchForm/>
+      <DateSearchForm/>
 
       <h5>Sort by:</h5>
       <div className="btn-group" role="group" aria-label="Basic example">
         <button type="button" className="btn btn-outline-secondary btn-lg" onClick={() => setTable(mapper(flights.sort(sorter('id'))))}>ID</button>
         <button type="button" className="btn btn-outline-secondary btn-lg" onClick={() => setTable(mapper(flights.sort(sorter('price'))))}>Price</button>
         <button type="button" className="btn btn-outline-secondary btn-lg" onClick={() => setTable(mapper(flights.sort(sorter('flightDuration'))))}>Duration</button>
+        <button type="button" className="btn btn-outline-secondary btn-lg" onClick={() => setTable(mapper(flights.sort(sorter('depatureTime'))))}>Dep</button>
       </div>
       <br />
       <br />
