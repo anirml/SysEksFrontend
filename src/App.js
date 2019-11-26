@@ -11,14 +11,17 @@ function App() {
   //     .then(res => { return res.json() })
   // }
 
-  useEffect(() => {
+  const GetAllFlight = () => {
     fetch(url)
-      .then(res => res.json())
-      .then((data) => {
-        setFlights(data)
-        setTable(mapper(data)
-        )
-      })
+    .then(res => res.json())
+    .then((data) => {
+      setFlights(data)
+      setTable(mapper(data))
+    })
+  }
+
+  useEffect(() => {
+    GetAllFlight()
   }, []);
 
 
@@ -57,11 +60,21 @@ function App() {
 
   // const flightKeys = Object.keys(flights[1]);
 
+  const milliToHourMin = (milliseconds) => {
+    let sec = milliseconds/1000
+    let min = sec/60
+    let remainingMin = min % 60
+    let hour = (min - remainingMin) / 60
+    return(
+        hour + "t. " + remainingMin + "min."
+    )
+  }
+
   const mapper = (array) => {
     return array.map((f) => {
       return <tr key={f.id}><th scope="row">{f.id}</th>
         <td>{f.depatureTime}</td>
-        <td>{f.flightDuration}</td>
+        <td>{milliToHourMin(f.flightDuration)}</td>
         <td>{f.departureAirportCode} - {f.departureAirportName}</td>
         <td>{f.arrivalAirportCode} - {f.arrivalAirportName}</td>
         <td>${f.price}</td>
@@ -108,8 +121,8 @@ function App() {
   //   </div>
   // );
 
-  const SearchFlights = (origin, destination) =>{
-    fetch('http://localhost:8080/jjugroup/api/flight/fromto/' + origin + '-' + destination)
+  const SearchFlights = (urlend) =>{
+    fetch('http://localhost:8080/jjugroup/api/flight/' + urlend)
     .then(res => res.json())
     .then((data) => {
       setFlights(data)
@@ -119,19 +132,7 @@ function App() {
 
   }
 
-  const SearchFlightsDate = (date) =>{
-    fetch('http://localhost:8080/jjugroup/api/flight/date/' + date)
-    .then(res => res.json())
-    .then((data) => {
-      setFlights(data)
-      setTable(mapper(data)
-      )
-    })
-
-  }
-
-
-  const SearchForm = () => {
+  const FromToSearchForm = () => {
     const [origin,setOrigin] = useState("");
     const [destination,setDestination] = useState("");
   
@@ -146,7 +147,7 @@ function App() {
       </div>
       <input type="text" className="form-control" placeholder="Ankomstdestination" id="input2" onChange={(event)=>setDestination(event.target.value)} value={destination} />
       <div className="input-group-append">
-        <button className="btn btn-outline-secondary" type="button" id="btn1" onClick={() => SearchFlights(origin, destination)} >Søg</button>
+        <button className="btn btn-outline-secondary" type="button" id="btn1" onClick={() => SearchFlights('fromto/' + origin + '-' + destination)} >Søg</button>
       </div>
     </div>
     );
@@ -160,9 +161,9 @@ function App() {
       <div className="input-group-prepend">
         <span className="input-group-text" id="">Find rejse dato </span>
       </div>
-      <input type="text" className="form-control" placeholder="Ankomstdestination" id="input3" onChange={(event)=>setDate(event.target.value)} value={date} />
+      <input type="date" className="form-control" placeholder="Ankomstdestination" id="input3" onChange={(event)=>setDate(event.target.value)} value={date} />
       <div className="input-group-append">
-        <button className="btn btn-outline-secondary" type="button" id="btn1" onClick={() => SearchFlightsDate(date)} >Søg</button>
+        <button className="btn btn-outline-secondary" type="button" id="btn1" onClick={() => SearchFlights('date/' + date)} >Søg</button>
       </div>
     </div>
     );
@@ -172,10 +173,11 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Memeondo</h1>
+      <h1>AviNation</h1>
 
-      <SearchForm/>
+      <FromToSearchForm/>
       <DateSearchForm/>
+      <button type="button" className="btn btn-outline-danger" onClick={() => GetAllFlight()}>Reset</button>
 
       <h5>Sort by:</h5>
       <div className="btn-group" role="group" aria-label="Basic example">
@@ -202,9 +204,6 @@ function App() {
           {table}
         </tbody>
       </table>
-
-        <button onClick={() => console.log(Object.keys(flights[1]))}>HEJ</button>
-
       </div>)
   }
   
