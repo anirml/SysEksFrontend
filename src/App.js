@@ -62,7 +62,8 @@ function App() {
 
   const milliToHourMin = (milliseconds) => {
     let sec = milliseconds/1000
-    let min = sec/60
+    let remainiongSec = sec % 60
+    let min = (sec - remainiongSec) /60
     let remainingMin = min % 60
     let hour = (min - remainingMin) / 60
     return(
