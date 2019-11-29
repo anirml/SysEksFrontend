@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import 'bootstrap/dist/css/bootstrap.css';
+//import 'bootstrap/dist/css/bootstrap.css';
 import './App.css';
+import logo from './AVINATION_3-01.svg';
 
 function App() {
 
-  const url = 'http://localhost:8080/jjugroup/api/flight/all'
+  const url = 'https://jjugroup.ga/SysEksBackend/api/flight/combined'
 
   // const loadFlights = () => {
   //   return fetch(url)
@@ -73,13 +74,13 @@ function App() {
 
   const mapper = (array) => {
     return array.map((f) => {
-      return <tr key={f.id}><th scope="row">{f.id}</th>
-        <td>{f.depatureTime}</td>
-        <td>{milliToHourMin(f.flightDuration)}</td>
-        <td>{f.departureAirportCode} - {f.departureAirportName}</td>
-        <td>{f.arrivalAirportCode} - {f.arrivalAirportName}</td>
-        <td>${f.price}</td>
-        <td><a className="btn btn-success" href={f.link}>Se tilbud</a></td>
+      return <tr key={f.id}><th scope="row" id="table_content">{f.id}</th>
+        <td className="table_content_class">{f.departureTime}</td>
+        <td className="table_content_class">{milliToHourMin(f.flightDuration)}</td>
+        <td className="table_content_class">{f.departureAirportCode} - {f.departureAirportName}</td>
+        <td className="table_content_class">{f.arrivalAirportCode} - {f.arrivalAirportName}</td>
+        <td className="table_content_class">${f.price}</td>
+        <td className="table_content_class"><a className="btn btn-success" href={f.link}>Se tilbud</a></td>
       </tr>
     })
   }
@@ -123,7 +124,7 @@ function App() {
   // );
 
   const SearchFlights = (urlend) =>{
-    fetch('http://localhost:8080/jjugroup/api/flight/' + urlend)
+    fetch('https://jjugroup.ga/SysEksBackend/api/flight/' + urlend)
     .then(res => res.json())
     .then((data) => {
       setFlights(data)
@@ -138,17 +139,14 @@ function App() {
     const [destination,setDestination] = useState("");
   
     return(
-      <div className="input-group mb-3">
-      <div className="input-group-prepend">
-        <span className="input-group-text" id="">Find rejse fra </span>
+    <div id="destination_form">
+      <div id="destination_form_text1">
+        <span>Find rejse ud fra destination</span>
       </div>
-      <input type="text" className="form-control" placeholder="Afrejsedestination" id="input1" onChange={(event)=>setOrigin(event.target.value)} value={origin} />
-      <div className="input-group-prepend">
-        <span className="input-group-text" id="">til</span>
-      </div>
-      <input type="text" className="form-control" placeholder="Ankomstdestination" id="input2" onChange={(event)=>setDestination(event.target.value)} value={destination} />
-      <div className="input-group-append">
-        <button className="btn btn-outline-secondary" type="button" id="btn1" onClick={() => SearchFlights('fromto/' + origin + '-' + destination)} >Søg</button>
+      <input className="form-control" placeholder="Afrejsedestination" id="arrival_input1" onChange={(event)=>setOrigin(event.target.value)} value={origin} />
+      <input className="form-control" placeholder="Ankomstdestination" id="arrival_input2" onChange={(event)=>setDestination(event.target.value)} value={destination} />
+      <div id="destination_button">
+        <button className="search_button" onClick={() => SearchFlights('fromto/' + origin + '-' + destination)} >Søg</button>
       </div>
     </div>
     );
@@ -158,13 +156,13 @@ function App() {
     const [date,setDate] = useState("");
   
     return(
-      <div className="input-group mb-3">
-      <div className="input-group-prepend">
-        <span className="input-group-text" id="">Find rejse dato </span>
+    <div id="date_form">
+      <div id="date_form_text">
+        <span>Find rejse ud fra dato </span>
       </div>
-      <input type="date" className="form-control" placeholder="Ankomstdestination" id="input3" onChange={(event)=>setDate(event.target.value)} value={date} />
-      <div className="input-group-append">
-        <button className="btn btn-outline-secondary" type="button" id="btn1" onClick={() => SearchFlights('date/' + date)} >Søg</button>
+      <input type="date" className="form-control" id="date_input" placeholder="Ankomstdestination" onChange={(event)=>setDate(event.target.value)} value={date} />
+      <div id="date_button">
+        <button className="search_button" type="button" id="btn1" onClick={() => SearchFlights('date/' + date)} >Søg</button>
       </div>
     </div>
     );
@@ -174,31 +172,36 @@ function App() {
 
   return (
     <div className="App">
-      <h1>AviNation</h1>
+      
+      <div id="header">
+        <img src={logo} alt="AviNation Logo" id="logo"/>
+      </div>
 
       <FromToSearchForm/>
       <DateSearchForm/>
-      <button type="button" className="btn btn-outline-danger" onClick={() => GetAllFlight()}>Reset</button>
-
-      <h5>Sort by:</h5>
-      <div className="btn-group" role="group" aria-label="Basic example">
-        <button type="button" className="btn btn-outline-secondary btn-lg" onClick={() => setTable(mapper(flights.sort(sorter('id'))))}>ID</button>
-        <button type="button" className="btn btn-outline-secondary btn-lg" onClick={() => setTable(mapper(flights.sort(sorter('price'))))}>Price</button>
-        <button type="button" className="btn btn-outline-secondary btn-lg" onClick={() => setTable(mapper(flights.sort(sorter('flightDuration'))))}>Duration</button>
-        <button type="button" className="btn btn-outline-secondary btn-lg" onClick={() => setTable(mapper(flights.sort(sorter('depatureTime'))))}>Dep</button>
+      
+      
+      
+      <span id="sort_by_text">Sort by:</span>
+      
+      <div role="group" id="table" aria-label="Basic example">
+        <button className="sort_buttons" onClick={() => setTable(mapper(flights.sort(sorter('id'))))}>ID</button>
+        <button className="sort_buttons" onClick={() => setTable(mapper(flights.sort(sorter('departureTime'))))}>Date</button>
+        <button className="sort_buttons" onClick={() => setTable(mapper(flights.sort(sorter('flightDuration'))))}>Duration</button>
+        <button className="sort_buttons" onClick={() => setTable(mapper(flights.sort(sorter('price'))))}>Price</button>
+        <button type="button" id="reset_button" onClick={() => GetAllFlight()}>Reset</button>
+        
       </div>
-      <br />
-      <br />
-      <table className="table table-striped">
+      <table id="category_table">
         <thead>
-          <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Date</th>
-            <th scope="col">Duration</th>
-            <th scope="col">Origin</th>
-            <th scope="col">Destination</th>
-            <th scope="col">Price</th>
-            <th scope="col">Link</th>
+          <tr >
+            <th scope="col" id="ID_table_head" className="category_table_head">ID</th>
+            <th scope="col" className="category_table_head">Date</th>
+            <th scope="col" className="category_table_head">Duration</th>
+            <th scope="col" className="category_table_head">Origin</th>
+            <th scope="col" className="category_table_head">Destination</th>
+            <th scope="col" className="category_table_head">Price</th>
+            <th scope="col" className="category_table_head">Link</th>
           </tr>
         </thead>
         <tbody>
