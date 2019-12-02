@@ -73,7 +73,7 @@ function App() {
   }
 
   const errorCheck = (prop) => {
-    if (prop['code'] !== null){
+    if (prop['code'] != null){
     alert( prop['message'])
   } else {
     return setTable(mapper(prop))
