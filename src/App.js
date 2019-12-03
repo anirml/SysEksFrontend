@@ -25,9 +25,7 @@ function App() {
 
   const [flights, setFlights] = useState('Loading')
 
-  const flights2 = [{ id: 1, date: 'Dec 1, 2019 8:50:00 PM', duration: 60000, price: 72.0, origin: 'CPH', destination: 'LHR', link: 'http://corndog.io/' },
-  { id: 2, date: 'Dec 1, 2019 6:50:00 PM', duration: 70000, price: 122.0, origin: 'CPH', destination: 'LHR', link: 'http://beesbeesbees.com/' },
-  { id: 3, date: 'Dec 1, 2019 7:20:00 PM', duration: 45000, price: 95.0, origin: 'CPH', destination: 'LHR', link: 'https://thatsthefinger.com/' }]
+  const arrivalCodes = ['CPH','LHR','GDP'];
 
   function sorter(sortBy) {
     var key = sortBy;
@@ -98,14 +96,27 @@ function App() {
       <div id="destination_form_text1">
         <span>Find rejse ud fra destination</span>
       </div>
-      <input className="form-control" placeholder="Afrejsedestination" id="arrival_input1" onChange={(event)=>setOrigin(event.target.value)} value={origin} />
-      <input className="form-control" placeholder="Ankomstdestination" id="arrival_input2" onChange={(event)=>setDestination(event.target.value)} value={destination} />
+      <select onChange={(event)=>setOrigin(event.target.value)}>
+      <option selected="selected">Afrejsedestination</option>
+        {arrivalCodes.map(c => <option> {c} </option>)}
+      </select>
+      <select onChange={(event)=>setDestination(event.target.value)}>
+      <option selected="selected">Ankomstdestination</option>
+        {arrivalCodes.map(c => <option> {c} </option>)}
+      </select>
       <div id="destination_button">
         <button className="search_button" onClick={() => SearchFlights('fromto/' + origin + '-' + destination)} >Søg</button>
       </div>
     </div>
     );
   }
+
+  // </div>
+  // <input className="form-control" placeholder="Afrejsedestination" id="arrival_input1" onChange={(event)=>setOrigin(event.target.value)} value={origin} />
+  // <input className="form-control" placeholder="Ankomstdestination" id="arrival_input2" onChange={(event)=>setDestination(event.target.value)} value={destination} />
+  // <div id="destination_button">
+  //   <button className="search_button" onClick={() => SearchFlights('fromto/' + origin + '-' + destination)} >Søg</button>
+  // </div>
 
   const DateSearchForm = () => {
     const [date,setDate] = useState("");
