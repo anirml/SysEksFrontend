@@ -20,6 +20,17 @@ input {
   box-shadow: none;
 }
 
+select {
+  margin: 0;
+  padding: 0;
+  min-width: 300px;
+  min-height: 35px;
+  font-size: 16px;
+  border-style: none;
+  box-shadow: none;
+  border-radius: 5px;
+}
+
 button {
   margin: 0;
   padding: 0;
@@ -42,6 +53,8 @@ span {
   font-size: calc(10px + 1vmin);
   color: white;
 }
+
+
 
 #header {
   min-height: 125px;
@@ -85,8 +98,15 @@ span {
   display: table-caption;
 }
 
+#destination_button {
+  display: table-cell;
+  vertical-align: bottom;
+}
+
 #arrival_input1 {
   display: table-cell;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
 }
 
 #arrival_input2 {

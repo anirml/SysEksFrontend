@@ -96,14 +96,14 @@ function App() {
       <div id="destination_form_text1">
         <span>Find rejse ud fra destination</span>
       </div>
-      <select onChange={(event)=>setOrigin(event.target.value)}>
-      <option selected="selected">Afrejsedestination</option>
-        {arrivalCodes.map(c => <option> {c} </option>)}
-      </select>
-      <select onChange={(event)=>setDestination(event.target.value)}>
-      <option selected="selected">Ankomstdestination</option>
-        {arrivalCodes.map(c => <option> {c} </option>)}
-      </select>
+        <select id="arrival_input1" onChange={(event)=>setOrigin(event.target.value)}>
+          <option selected="selected">Afrejsedestination</option>
+            {arrivalCodes.map(c => <option> {c} </option>)}
+        </select>
+        <select id="arrival_input2" onChange={(event)=>setDestination(event.target.value)}>
+          <option selected="selected">Ankomstdestination</option>
+            {arrivalCodes.map(c => <option> {c} </option>)}
+        </select>
       <div id="destination_button">
         <button className="search_button" onClick={() => SearchFlights('fromto/' + origin + '-' + destination)} >Søg</button>
       </div>
@@ -112,8 +112,8 @@ function App() {
   }
 
   // </div>
-  // <input className="form-control" placeholder="Afrejsedestination" id="arrival_input1" onChange={(event)=>setOrigin(event.target.value)} value={origin} />
-  // <input className="form-control" placeholder="Ankomstdestination" id="arrival_input2" onChange={(event)=>setDestination(event.target.value)} value={destination} />
+  // <input className="form-control" placeholder="Afrejsedestination"  onChange={(event)=>setOrigin(event.target.value)} value={origin} />
+  // <input className="form-control" placeholder="Ankomstdestination"  onChange={(event)=>setDestination(event.target.value)} value={destination} />
   // <div id="destination_button">
   //   <button className="search_button" onClick={() => SearchFlights('fromto/' + origin + '-' + destination)} >Søg</button>
   // </div>
