@@ -20,12 +20,11 @@ function App() {
 
   useEffect(() => {
     GetAllFlight()
+    getAirportCodes()
   }, []);
 
 
   const [flights, setFlights] = useState('Loading')
-
-  const arrivalCodes = ['CPH','LHR','GDP'];
 
   function sorter(sortBy) {
     var key = sortBy;
@@ -87,6 +86,18 @@ function App() {
 
   }
 
+  const getAirportCodes = () => {
+    fetch('https://jjugroup.ga/SysEksBackend/api/flight/codelist')
+    .then(res => res.json())
+    .then((data) => {
+      setArrivalCodes(data['arrivalCodes'])
+      setDepartureCodes(data['departureCodes'])
+    })
+  }
+
+  const [departureCodes, setDepartureCodes] = useState([])
+  const [arrivalCodes, setArrivalCodes] = useState([])
+
   const FromToSearchForm = () => {
     const [origin,setOrigin] = useState("");
     const [destination,setDestination] = useState("");
@@ -98,7 +109,7 @@ function App() {
       </div>
         <select id="arrival_input1" onChange={(event)=>setOrigin(event.target.value)}>
           <option selected="selected">Afrejsedestination</option>
-            {arrivalCodes.map(c => <option> {c} </option>)}
+            {departureCodes.map(c => <option> {c} </option>)}
         </select>
         <select id="arrival_input2" onChange={(event)=>setDestination(event.target.value)}>
           <option selected="selected">Ankomstdestination</option>
