@@ -75,6 +75,14 @@ function App() {
     )
   }
 
+  const errorCheck = (prop) => {
+    if (prop['code'] != null){
+    alert( prop['message'])
+  } else {
+    return setTable(mapper(prop))
+  }
+}
+
   const mapper = (array) => {
     return array.map((f) => {
       return <tr key={f.id}><th scope="row" id="table_content">{f.id}</th>
@@ -131,8 +139,7 @@ function App() {
     .then(res => res.json())
     .then((data) => {
       setFlights(data)
-      setTable(mapper(data)
-      )
+      errorCheck(data)
     })
 
   }
@@ -189,7 +196,7 @@ function App() {
       
       <div role="group" id="table" aria-label="Basic example">
         <button className="sort_buttons" onClick={() => setTable(mapper(flights.sort(sorter('id'))))}>ID</button>
-        <button className="sort_buttons" onClick={() => setTable(mapper(flights.sort(sorter('departureTime'))))}>Date</button>
+        <button className="sort_buttons" onClick={() => setTable(mapper(flights.sort((a, b) => new Date(a.departureTime) - new Date(b.departureTime))))}>Date</button>
         <button className="sort_buttons" onClick={() => setTable(mapper(flights.sort(sorter('flightDuration'))))}>Duration</button>
         <button className="sort_buttons" onClick={() => setTable(mapper(flights.sort(sorter('price'))))}>Price</button>
         <button type="button" id="reset_button" onClick={() => GetAllFlight()}>Reset</button>
