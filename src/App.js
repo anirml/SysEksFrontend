@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 //import 'bootstrap/dist/css/bootstrap.css';
 import './App.css';
 import logo from './AVINATION_3-01.svg';
+import FB from './Facebook_Logo.svg';
+import Twitter from './Twitter_Logo.svg';
+import Insta from './Instagram_Logo.svg';
 
 function App() {
 
@@ -208,7 +211,16 @@ function App() {
           {table}
         </tbody>
       </table>
-      </div>)
+      <div id="footer">
+        <div id="footer_contents">
+          <span id="footer_text"> Copyright AviNation 2019 </span>
+          <a href="https://www.facebook.com/"><img id="FB-Logo" alt="Facebook-logo" src={FB} /></a>
+          <a href="https://www.twitter.com/"><img id="Twitter-Logo" alt="Twitter-logo" src={Twitter}/></a>
+          <a href="https://www.instagram.com/"><img id="Insta-Logo" alt="Instagram-logo" src={Insta}/></a>
+        </div>
+      </div>
+
+    </div>)
   }
   
 export default App;

@@ -47,7 +47,7 @@ span {
   min-height: 125px;
   width: auto;
   display: flex;
-  background-image: linear-gradient(white, #001F7F) ;
+  background-image: linear-gradient(#ADD9E6, #001F7F) ;
 }
 
 .form-control {
@@ -159,4 +159,45 @@ span {
 .table_content_class {
   padding: 5px;
   align-content: center;
+}
+
+#footer {
+  width: auto;
+  background-image: linear-gradient( #001041,#001F7F, #001F7F, #001F7F);
+  overflow: auto;
+  
+}
+
+#footer_contents {
+  max-width: 875px;
+  margin-top: 25px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#footer_text {
+  color: white;
+  float: left;
+  margin-left: 20px;
+  margin-top: 19px;
+}
+
+#FB-Logo {
+  min-height: 60px;
+  max-height: 65px;
+  float: right;
+  margin-left:10px;
+}
+
+#Twitter-Logo {
+  min-height: 60px;
+  max-height: 65px;
+  float: right;
+  margin-left:10px;
+}
+
+#Insta-Logo {
+  min-height: 60px;
+  max-height: 65px;
+  float: right;
 }
