@@ -83,7 +83,6 @@ function App() {
       setFlights(data)
       errorCheck(data)
     })
-
   }
 
   const getAirportCodes = () => {
@@ -116,7 +115,7 @@ function App() {
             {arrivalCodes.map(c => <option> {c} </option>)}
         </select>
       <div id="destination_button">
-        <button className="search_button" onClick={() => SearchFlights('fromto/' + origin + '-' + destination)} >Søg</button>
+        <button className="search_button" onClick={() => origin == '' || destination == '' ? alert("Afrejsedestination eller Ankomstdestination mangler.") : SearchFlights('fromto/' + origin + '-' + destination)} >Søg</button>
       </div>
     </div>
     );
@@ -139,7 +138,7 @@ function App() {
       </div>
       <input type="date" className="form-control" id="date_input" placeholder="Ankomstdestination" onChange={(event)=>setDate(event.target.value)} value={date} />
       <div id="date_button">
-        <button className="search_button" type="button" id="btn1" onClick={() => SearchFlights('date/' + date)} >Søg</button>
+        <button className="search_button" type="button" id="btn1" onClick={() => date == '' ? alert("Vælg venligst en dato.") : SearchFlights('date/' + date)} >Søg</button>
       </div>
     </div>
     );
